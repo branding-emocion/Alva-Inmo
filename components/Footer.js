@@ -78,7 +78,7 @@ export default function Footer() {
             />
             <button
               type="submit"
-              className="w-full p-2 bg-[#ff5722] text-white rounded hover:bg-[#e64a19] transition-colors"
+              className="w-full p-2 bg-[#eab308] text-white rounded transition-colors"
             >
               Contacto
             </button>
