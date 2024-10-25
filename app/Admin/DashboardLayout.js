@@ -6,10 +6,9 @@ import { auth, db } from "@/firebase/firebaseClient";
 import Link from "next/link";
 import {
   BookOpenText,
-  MessageSquareDot,
   MonitorXIcon,
-  PartyPopper,
   Users,
+  Warehouse,
   YoutubeIcon,
 } from "lucide-react";
 import { signOut } from "firebase/auth";
@@ -33,27 +32,27 @@ const DashboardLayout = ({ children }) => {
       icon: <Users className="w-6 h-6 text-white" />,
       hidden: claims?.UsuarioBase,
     },
+    // {
+    //   name: "Pódcast",
+    //   link: "/Admin/Podcast",
+    //   icon: <YoutubeIcon className="w-6 h-6 text-white" />,
+    // },
     {
-      name: "Pódcast",
-      link: "/Admin/Podcast",
-      icon: <YoutubeIcon className="w-6 h-6 text-white" />,
-    },
-    {
-      name: "Eventos",
-      link: "/Admin/Eventos",
-      icon: <PartyPopper className="w-6 h-6 text-white" />,
+      name: "Propiedades",
+      link: "/Admin/Propiedades",
+      icon: <Warehouse className="w-6 h-6 text-white" />,
     },
     {
       name: "Blog",
       link: "/Admin/Blog",
       icon: <BookOpenText className="w-6 h-6 text-white" />,
     },
-    {
-      name: "Comentarios",
-      link: "/Admin/Notificaciones",
-      icon: <MessageSquareDot className="w-6 h-6 text-white" />,
-      CantComentarios: true,
-    },
+    // {
+    //   name: "Comentarios",
+    //   link: "/Admin/Notificaciones",
+    //   icon: <MessageSquareDot className="w-6 h-6 text-white" />,
+    //   CantComentarios: true,
+    // },
   ];
 
   useEffect(() => {
@@ -79,7 +78,7 @@ const DashboardLayout = ({ children }) => {
   }, []);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>error</p>;
+  if (error) return <p>Error</p>;
 
   if (!user) return <Login />;
   return (
@@ -98,7 +97,7 @@ const DashboardLayout = ({ children }) => {
                     </Avatar>
                   </div>
                   <span className="ml-2 text-sm tracking-wide truncate uppercase">
-                    {user.displayName || "Miryam Roncal"}
+                    {user?.displayName || "Admin"}
                   </span>
                 </div>
               </li>

@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -194,22 +193,22 @@ const Blog = () => {
                     </div>
                     <div className="flex justify-center space-x-2 py-4">
                       <FacebookShareButton
-                        url={`https://www.getraining.org/Blog/${blog.id}`}
+                        url={`https://www.alvainmobiliarios.com/Blog/${blog.id}`}
                       >
                         <FacebookIcon size={32} round />
                       </FacebookShareButton>
                       <TwitterShareButton
-                        url={`https://www.getraining.org/Blog/${blog.id}`}
+                        url={`https://www.alvainmobiliarios.com/Blog/${blog.id}`}
                       >
                         <TwitterIcon size={32} round />
                       </TwitterShareButton>
                       <WhatsappShareButton
-                        url={`https://www.getraining.org/Blog/${blog.id}`}
+                        url={`https://www.alvainmobiliarios.com/Blog/${blog.id}`}
                       >
                         <WhatsappIcon size={32} round />
                       </WhatsappShareButton>
                       <LinkedinShareButton
-                        url={`https://www.getraining.org/Blog/${blog.id}`}
+                        url={`https://www.alvainmobiliarios.com/Blog/${blog.id}`}
                       >
                         <LinkedinIcon size={32} round />
                       </LinkedinShareButton>

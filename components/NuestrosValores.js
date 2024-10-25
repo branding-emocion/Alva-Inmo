@@ -1,66 +1,65 @@
-import {
-  Briefcase,
-  CheckSquare,
-  ShieldCheck,
-  TrendingUp,
-  Umbrella,
-  Users,
-} from "lucide-react";
+"use client";
+import { motion } from "framer-motion";
+import { ClipboardCheck, Shield, Briefcase, Award, Leaf } from "lucide-react";
 
-export default function Valores() {
-  const valores = [
-    {
-      titulo: "Transparencia",
-      descripcion:
-        "Creemos en la comunicación clara y abierta con nuestros clientes.",
-      icono: <CheckSquare className="h-10 w-10 text-yellow-500" />,
-    },
-    {
-      titulo: "Integridad",
-      descripcion:
-        "Actuamos con honestidad y responsabilidad en todas nuestras transacciones.",
-      icono: <ShieldCheck className="h-10 w-10 text-yellow-500" />,
-    },
-    {
-      titulo: "Compromiso",
-      descripcion:
-        "Estamos dedicados a satisfacer las necesidades de nuestros clientes.",
-      icono: <Briefcase className="h-10 w-10 text-yellow-500" />,
-    },
-    {
-      titulo: "Innovación",
-      descripcion: "Nos mantenemos a la vanguardia del mercado inmobiliario.",
-      icono: <TrendingUp className="h-10 w-10 text-yellow-500" />,
-    },
-    {
-      titulo: "Responsabilidad",
-      descripcion: "Cumplimos con nuestros compromisos en todos los proyectos.",
-      icono: <Users className="h-10 w-10 text-yellow-500" />,
-    },
-    {
-      titulo: "Profesionalismo",
-      descripcion:
-        "Nos aseguramos de actuar con el máximo nivel de profesionalismo.",
-      icono: <Umbrella className="h-10 w-10 text-yellow-500" />,
-    },
-  ];
+const valores = [
+  {
+    icon: <ClipboardCheck className="h-8 w-8" />,
+    title: "Transparencia",
+    description:
+      "Nos comprometemos a una comunicación clara y honesta en todas nuestras interacciones.",
+  },
+  {
+    icon: <Shield className="h-8 w-8" />,
+    title: "Integridad",
+    description:
+      "Actuamos con ética y responsabilidad en cada aspecto de nuestro negocio.",
+  },
+  {
+    icon: <Briefcase className="h-8 w-8" />,
+    title: "Compromiso",
+    description:
+      "Nos dedicamos plenamente a satisfacer las necesidades de nuestros clientes y comunidad.",
+  },
+  {
+    icon: <Award className="h-8 w-8" />,
+    title: "Profesionalismo",
+    description:
+      "Mantenemos los más altos estándares de calidad y excelencia en nuestro trabajo.",
+  },
+  {
+    icon: <Leaf className="h-8 w-8" />,
+    title: "Sostenibilidad",
+    description:
+      "El 3% de los ingresos de Alva Negocios Inmobiliarios se destinan para proyectos y obras sociales en el Alto Trujillo.",
+  },
+];
 
+export default function NuestrosValores() {
   return (
-    <section className="w-full py-16 bg-white">
+    <section className="py-16 bg-gradient-to-b from-white to-gray-100">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">
           Nuestros Valores
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {valores.map((valor, index) => (
-            <div
-              key={index}
-              className="bg-white p-8 rounded-xl shadow-md text-center hover:shadow-lg transition-shadow"
+            <motion.div
+              key={valor.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
-              <div className="flex justify-center mb-6">{valor.icono}</div>
-              <h3 className="text-xl font-semibold mb-4">{valor.titulo}</h3>
-              <p className="text-gray-600">{valor.descripcion}</p>
-            </div>
+              <div className="flex items-center mb-4">
+                <div className="bg-yellow-400 p-3 rounded-full mr-4">
+                  {valor.icon}
+                </div>
+                <h3 className="text-xl font-semibold">{valor.title}</h3>
+              </div>
+              <p className="text-gray-600">{valor.description}</p>
+            </motion.div>
           ))}
         </div>
       </div>

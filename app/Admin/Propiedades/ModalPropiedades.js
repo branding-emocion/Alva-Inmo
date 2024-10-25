@@ -6,7 +6,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,12 +33,20 @@ import {
 } from "firebase/firestore";
 import useAuthState from "@/lib/useAuthState";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 const QuillNoSSRWrapper = dynamic(() => import("react-quill"), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
 });
 
-const ModalBlog = ({ OpenModal, setOpenModal }) => {
+const ModalPropiedades = ({ OpenModal, setOpenModal }) => {
   const [{ user }, loading, error] = useAuthState(auth);
 
   const [InputValues, setInputValues] = useState({});
@@ -59,7 +66,7 @@ const ModalBlog = ({ OpenModal, setOpenModal }) => {
       images.map(async (image, index) => {
         const imageRef = ref(
           storage,
-          `ImagenesBlog/${name}/image-${index}.jpg`
+          `ImagenesPropiedad/${name}/image-${index}.jpg`
         );
         await uploadBytes(imageRef, image);
         const url = await getDownloadURL(imageRef);
@@ -75,7 +82,11 @@ const ModalBlog = ({ OpenModal, setOpenModal }) => {
       setLoading(true);
       if (Object.keys(OpenModal?.InfoEditar).length > 0) {
         if (Object.keys(InputValues).length > 0) {
-          const UpdateRef = doc(db, "Blog", `${OpenModal?.InfoEditar?.id}`);
+          const UpdateRef = doc(
+            db,
+            "Propiedades",
+            `${OpenModal?.InfoEditar?.id}`
+          );
 
           // Set the "capital" field of the city 'DC'
           await updateDoc(UpdateRef, {
@@ -86,7 +97,7 @@ const ModalBlog = ({ OpenModal, setOpenModal }) => {
           // Borrar las imágenes antiguas
           const ImgRef = ref(
             storage,
-            `ImagenesBlog/${OpenModal?.InfoEditar?.TituloBlog?.replace(
+            `ImagenesPropiedad/${OpenModal?.InfoEditar?.TituloPropiedad?.replace(
               /\s+/g,
               "_"
             )}/`
@@ -108,13 +119,17 @@ const ModalBlog = ({ OpenModal, setOpenModal }) => {
             });
 
           const NombreCarpeta =
-            InputValues?.TituloBlog?.replace(/\s+/g, "_") ||
-            OpenModal?.InfoEditar?.TituloBlog?.replace(/\s+/g, "_");
+            InputValues?.TituloPropiedad?.replace(/\s+/g, "_") ||
+            OpenModal?.InfoEditar?.TituloPropiedad?.replace(/\s+/g, "_");
 
           // toca modificar la funcion y enviarle el values para que funcione mejor
           const ImagesUrl = await uploadImages(files, NombreCarpeta);
 
-          const UpdateRef = doc(db, "Blog", `${OpenModal?.InfoEditar?.id}`);
+          const UpdateRef = doc(
+            db,
+            "Propiedades",
+            `${OpenModal?.InfoEditar?.id}`
+          );
           await updateDoc(UpdateRef, {
             Imagenes: ImagesUrl,
           });
@@ -127,11 +142,14 @@ const ModalBlog = ({ OpenModal, setOpenModal }) => {
           return;
         }
 
-        const NombreCarpeta = InputValues?.TituloBlog?.replace(/\s+/g, "_");
+        const NombreCarpeta = InputValues?.TituloPropiedad?.replace(
+          /\s+/g,
+          "_"
+        );
 
         const ImagesUrl = await uploadImages(files, NombreCarpeta); // Asegúrate de que la promesa se haya resuelto
 
-        const docRef = await addDoc(collection(db, "Blog"), {
+        const docRef = await addDoc(collection(db, "Propiedades"), {
           ...InputValues,
           Imagenes: ImagesUrl, // Ahora ImagesUrl es una matriz de cadenas de texto
           CreatAt: serverTimestamp(),
@@ -167,25 +185,50 @@ const ModalBlog = ({ OpenModal, setOpenModal }) => {
             {Object.keys(OpenModal?.InfoEditar).length > 0
               ? "Editar"
               : "Agregar"}{" "}
-            blog
+            Propiedad
           </DialogTitle>
           <DialogDescription>
             <form onSubmit={HandlerSubmit} className="space-y-4 w-full h-full">
               <div className="grid grid-cols-1 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="TituloBlog" className="">
-                    Titulo del blog <span className="text-red-600">(*)</span>
+                  <Label htmlFor="TituloPropiedad" className="">
+                    Nombre de la Propiedad{" "}
+                    <span className="text-red-600">(*)</span>
                   </Label>
                   <Input
-                    id="TituloBlog"
-                    name="TituloBlog"
+                    id="TituloPropiedad"
+                    name="TituloPropiedad"
                     className="w-full text-gray-900"
                     onChange={HandlerChange}
-                    defaultValue={OpenModal?.InfoEditar?.TituloBlog}
+                    defaultValue={OpenModal?.InfoEditar?.TituloPropiedad}
                     required
                     autoComplete="off"
                     autoFocus
                   />
+                </div>
+
+                <div>
+                  <Label htmlFor="Destino" className="">
+                    Propiedad para ?
+                  </Label>
+                  <Select
+                    id="Destino"
+                    onValueChange={(e) => {
+                      setInputValues({
+                        ...InputValues,
+                        Destino: e,
+                      });
+                    }}
+                    defaultValue={OpenModal?.InfoEditar?.Destino}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona una opción" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Vender">Vender</SelectItem>
+                      <SelectItem value="Alquilar">Alquilar</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div>
                   <Label htmlFor="ImagenPrincipal" className="">
@@ -199,11 +242,11 @@ const ModalBlog = ({ OpenModal, setOpenModal }) => {
                 </div>
 
                 <div className="">
-                  <Label htmlFor="ContenidoBLog" className="">
+                  <Label htmlFor="ContenidoPropiedad" className="">
                     Contenido <span className="text-red-600">(*)</span>
                   </Label>
                   <QuillNoSSRWrapper
-                    id="ContenidoBLog"
+                    id="ContenidoPropiedad"
                     modules={modules}
                     formats={formats}
                     theme="snow"
@@ -211,11 +254,11 @@ const ModalBlog = ({ OpenModal, setOpenModal }) => {
                     onChange={(e) => {
                       setInputValues({
                         ...InputValues,
-                        ContenidoBLog: e,
+                        ContenidoPropiedad: e,
                       });
                     }}
                     className="text-black  overflow-auto"
-                    defaultValue={OpenModal?.InfoEditar?.ContenidoBLog}
+                    defaultValue={OpenModal?.InfoEditar?.ContenidoPropiedad}
                   />
                 </div>
               </div>
@@ -235,4 +278,4 @@ const ModalBlog = ({ OpenModal, setOpenModal }) => {
   );
 };
 
-export default ModalBlog;
+export default ModalPropiedades;

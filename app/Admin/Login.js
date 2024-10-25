@@ -52,7 +52,7 @@ const Login = () => {
               </h3>
             </div>
             <div className="space-y-6">
-              <div className>
+              <div>
                 <input
                   className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-[#004f51]"
                   type="email"

@@ -4,7 +4,7 @@ import { Target } from "lucide-react";
 
 export default function NuestraEmpresa() {
   return (
-    <section className="py-12 bg-gray-50">
+    <section id="quienes-somos" className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12">
           NUESTRA EMPRESA

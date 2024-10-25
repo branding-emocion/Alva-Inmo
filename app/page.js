@@ -1,3 +1,4 @@
+import BlogSection from "@/components/BlogSection";
 import RealEstateCarousel from "@/components/Carrousel";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/Formulario";
@@ -18,7 +19,9 @@ const HomePage = () => {
       <NuestraEmpresa />
       <Valores />
       <ComprarSection />
+
       <ContactForm />
+      <BlogSection />
       <Footer />
     </div>
   );

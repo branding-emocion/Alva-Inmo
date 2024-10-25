@@ -1,15 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { BadgePlus, PencilIcon, TrashIcon, YoutubeIcon } from "lucide-react";
-import Image from "next/image";
+import { BadgePlus, PencilIcon, TrashIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import ModalPropiedades from "./ModalPropiedades";
 import {
   collection,
   deleteDoc,
@@ -19,7 +20,7 @@ import {
   query,
 } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseClient";
-import ModalEventos from "./ModalEventos";
+import Image from "next/image";
 import { deleteObject, listAll, ref } from "firebase/storage";
 import {
   FacebookShareButton,
@@ -32,19 +33,21 @@ import {
   LinkedinIcon,
 } from "react-share";
 
-const EventosPage = () => {
+const Propiedades = () => {
   const [OpenModal, setOpenModal] = useState({
     Visible: false,
     InfoEditar: {},
   });
 
-  const [Eventos, setEventos] = useState([]);
+  const [Propiedades, setPropiedades] = useState([]);
+
+  console.log("Propiedades", Propiedades);
 
   useEffect(() => {
-    const q = query(collection(db, "Eventos"), orderBy("CreatAt", "desc"));
+    const q = query(collection(db, "Propiedades"), orderBy("CreatAt", "desc"));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      setEventos(
+      setPropiedades(
         snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -53,18 +56,20 @@ const EventosPage = () => {
     });
     return () => unsubscribe();
   }, []);
+
   return (
     <>
       {OpenModal.Visible && (
-        <ModalEventos OpenModal={OpenModal} setOpenModal={setOpenModal} />
+        <ModalPropiedades OpenModal={OpenModal} setOpenModal={setOpenModal} />
       )}
       <div className="space-y-6">
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle>Bienvenido a la sección de Eventos</CardTitle>
+            <CardTitle>Bienvenido al Propiedades</CardTitle>
 
             <CardDescription>
-              En esta sección, puedes ver y modificar los Eventos de la página.
+              En esta sección, puedes ver y modificar las publicaciones del
+              Propiedades de la página.
             </CardDescription>
             <div>
               <Button
@@ -87,13 +92,13 @@ const EventosPage = () => {
 
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle>Lista de Eventos</CardTitle>
+            <CardTitle>Lista de Propiedades</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="mx-auto grid max-w-6xl  grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3  ">
-              {Eventos?.map((Eventos) => (
+              {Propiedades?.map((Propiedades) => (
                 <div
-                  key={Eventos.id}
+                  key={Propiedades.id}
                   className="  w-full mx-auto cursor-pointer"
                 >
                   <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm mb-5">
@@ -101,8 +106,8 @@ const EventosPage = () => {
                       <Image
                         className="rounded-t-lg "
                         fill
-                        src={Eventos?.Imagenes[0] || ""}
-                        alt="imageEventos"
+                        src={Propiedades?.Imagenes[0] || ""}
+                        alt="imagePropiedades"
                         style={{
                           objectFit: "cover",
                         }}
@@ -112,9 +117,22 @@ const EventosPage = () => {
                     <div className="p-5">
                       <div>
                         <h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2">
-                          {Eventos?.TituloEvento}
+                          {Propiedades?.TituloPropiedad}
                         </h5>
                       </div>
+                      <div
+                        className="quill-content line-clamp-4 text-justify"
+                        dangerouslySetInnerHTML={{
+                          __html: Propiedades?.ContenidoPropiedad,
+                        }}
+                      />
+
+                      {/* <a
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center"
+                    href="#"
+                  >
+                    Read more
+                  </a> */}
                     </div>
 
                     <div className="flex items-center justify-center gap-x-2 pb-2">
@@ -123,7 +141,7 @@ const EventosPage = () => {
                           e.preventDefault();
                           setOpenModal({
                             Visible: true,
-                            InfoEditar: Eventos,
+                            InfoEditar: Propiedades,
                           });
                         }}
                         className="bg-blue-500 space-x-1.5 rounded-lg  px-4 py-1.5 text-white duration-100 hover:bg-blue-600"
@@ -134,21 +152,20 @@ const EventosPage = () => {
                         onClick={async (e) => {
                           e.preventDefault();
 
-                          if (
-                            confirm(
-                              `Esta Seguro de eliminar el Eventos: ${Eventos.TituloEvento}`
-                            )
-                          ) {
+                          const Confirm = confirm(
+                            `Esta Seguro de eliminar el Propiedades: ${Propiedades.TituloPropiedades}`
+                          );
+                          if (Confirm) {
                             const ImgRef = ref(
                               storage,
-                              `Eventos/${Eventos?.TituloEvento?.replace(
+                              `ImagenesPropiedades/${Propiedades?.TituloPropiedades?.replace(
                                 /\s+/g,
                                 "_"
                               )}/`
                             );
 
                             await deleteDoc(
-                              doc(db, "Eventos", `${Eventos.id}`)
+                              doc(db, "Propiedades", `${Propiedades.id}`)
                             );
 
                             // Lista todos los objetos (archivos) en el directorio
@@ -182,28 +199,28 @@ const EventosPage = () => {
                         <TrashIcon className="w-4 h-4" />
                       </button>
                     </div>
-                    <div className="flex justify-center space-x-2 py-4">
+                    {/* <div className="flex justify-center space-x-2 py-4">
                       <FacebookShareButton
-                        url={`https://www.alvainmobiliarios.com/Eventos/${Eventos.id}`}
+                        url={`https://www.alvainmobiliarios.com/Propiedades/${Propiedades.id}`}
                       >
                         <FacebookIcon size={32} round />
                       </FacebookShareButton>
                       <TwitterShareButton
-                        url={`https://www.alvainmobiliarios.com/Eventos/${Eventos.id}`}
+                        url={`https://www.alvainmobiliarios.com/Propiedades/${Propiedades.id}`}
                       >
                         <TwitterIcon size={32} round />
                       </TwitterShareButton>
                       <WhatsappShareButton
-                        url={`https://www.alvainmobiliarios.com/Eventos/${Eventos.id}`}
+                        url={`https://www.alvainmobiliarios.com/Propiedades/${Propiedades.id}`}
                       >
                         <WhatsappIcon size={32} round />
                       </WhatsappShareButton>
                       <LinkedinShareButton
-                        url={`https://www.alvainmobiliarios.com/Eventos/${Eventos.id}`}
+                        url={`https://www.alvainmobiliarios.com/Propiedades/${Propiedades.id}`}
                       >
                         <LinkedinIcon size={32} round />
                       </LinkedinShareButton>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ))}
@@ -215,4 +232,4 @@ const EventosPage = () => {
   );
 };
 
-export default EventosPage;
+export default Propiedades;

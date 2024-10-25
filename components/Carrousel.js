@@ -45,7 +45,7 @@ export default function RealEstateCarousel() {
   }, []);
 
   return (
-    <div className="carousel-container relative w-full h-[90vh] overflow-hidden">
+    <div className="carousel-container relative w-full h-[90vh] overflow-hidden mt-[120px]">
       <style jsx>{`
         @keyframes zoomIn {
           0% {

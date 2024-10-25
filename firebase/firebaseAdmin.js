@@ -6,17 +6,17 @@ const appAdmin = !admin.apps.length
   ? admin.initializeApp({
       credential: admin.credential.cert({
         type: "service_account",
-        project_id: "getraining-a2a30",
-        private_key_id: "84492982aeae36c2fa8e8dd9f1eca0849965b03c",
+        project_id: "alva-inmobiliario",
+        private_key_id: "aa261886bdd0871231b9d71dba2de01b3c5cc255",
         private_key: process.env.FIREBASE_PRIVATE_KEY,
         client_email: process.env.FIREBASE_CLIENT_EMAIL,
-        client_id: "102909036174424699324",
+        client_id: "106379198104081564411",
         auth_uri: "https://accounts.google.com/o/oauth2/auth",
         token_uri: "https://oauth2.googleapis.com/token",
         auth_provider_x509_cert_url:
           "https://www.googleapis.com/oauth2/v1/certs",
         client_x509_cert_url:
-          "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-nv38o%40getraining-a2a30.iam.gserviceaccount.com",
+          "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-zb3rd%40alva-inmobiliario.iam.gserviceaccount.com",
         universe_domain: "googleapis.com",
       }),
     })

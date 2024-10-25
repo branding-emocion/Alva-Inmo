@@ -1,5 +1,4 @@
 "use client";
-import { useToast } from "@/components/ui/use-toast";
 import React, { useEffect, useState } from "react";
 import ModalUsuarios from "./ModalUsuarios";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -22,6 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
 
 const Usuarios = () => {
   const { toast } = useToast();
