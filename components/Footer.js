@@ -1,16 +1,43 @@
 "use client";
 import { useState } from "react";
 import { MapPin, Mail, Phone } from "lucide-react";
+import { Button } from "./ui/button";
 
 export default function Footer() {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
-  const [email, setEmail] = useState("");
+  const [InputValues, setInputValues] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted:", { name, number, email });
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/SendMailForm", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(InputValues),
+      });
+
+      const responseData = await response.json();
+
+      alert(responseData?.message || "Error al enviar el formulario");
+
+      e.target.reset();
+    } catch (error) {
+      console.log("error", error);
+
+      alert("Error al enviar el formulario");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handlerChange = (e) => {
+    setInputValues({
+      ...InputValues,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -50,48 +77,53 @@ export default function Footer() {
 
         {/* Contact Form */}
         <div className="w-full md:w-1/3 mb-8 md:mb-0">
-          <h2 className="text-2xl font-bold mb-4">Escribenos</h2>
+          <h2 className="text-2xl font-bold mb-4 text-[#eab308]">Escribenos</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
               placeholder="Nombre *"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               className="w-full p-2 bg-[#2a2a36] rounded"
+              onChange={handlerChange}
+              name="Nombre"
               required
             />
             <input
               type="tel"
               placeholder="Numero *"
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
               className="w-full p-2 bg-[#2a2a36] rounded"
+              onChange={handlerChange}
+              name="Numero"
               required
             />
             <input
               type="email"
               placeholder="Correo *"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               className="w-full p-2 bg-[#2a2a36] rounded"
+              onChange={handlerChange}
+              name="Correo"
               required
             />
-            <button
+            <Button
               type="submit"
-              className="w-full p-2 bg-[#eab308] text-white rounded transition-colors"
+              disaabled={isSubmitting}
+              className="w-full p-2 bg-[#eab308] uppercase text-xl font-bold text-white rounded transition-colors"
             >
               Contacto
-            </button>
+            </Button>
           </form>
         </div>
 
         {/* Contact Information */}
         <div className="w-full md:w-1/4">
-          <h2 className="text-2xl font-bold mb-4">Contacto</h2>
+          <h2 className="text-2xl font-bold mb-4 text-[#eab308]">Contacto</h2>
           <p className="mb-2">Katya ALva Correa</p>
           <div className="flex items-center mb-2">
+            <MapPin size={18} className="mr-2 tex" />
+            <p>Calle Los Olivos 402 Huanchaco , Trujillo</p>
+          </div>
+          <div className="flex items-center mb-2">
             <MapPin size={18} className="mr-2" />
-            <p>Calle Los Olivos 402 Huanchaco</p>
+            <p>Av. Central 1131 Álamos de Monterrico, Lima.</p>
           </div>
           <div className="flex items-center mb-2">
             <Mail size={18} className="mr-2" />
@@ -107,7 +139,7 @@ export default function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="mt-12 text-center relative z-10">
+      <div className="mt-12 text-center relative z-10 text-[#eab308]">
         <p>&copy; {new Date().getFullYear()} by Alva Negocios Inmobiliarios</p>
       </div>
     </footer>

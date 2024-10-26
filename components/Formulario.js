@@ -16,17 +16,33 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/SendMailForm", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const responseData = await response.json();
+
+      alert(responseData?.message || "Error al enviar el formulario");
+
+      e.target.reset();
+    } catch (error) {
+      alert("Error al enviar el formulario");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSelectChange = (value) => {
-    setFormData((prev) => ({ ...prev, type: value || "alquilar" }));
   };
 
   return (
@@ -47,13 +63,13 @@ export default function ContactForm() {
             <h3 className="text-2xl font-bold mb-6">Contáctanos</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <Label htmlFor="name">Nombre y apellidos</Label>
+                <Label htmlFor="nombres">Nombre y apellidos</Label>
                 <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
+                  id="nombres"
+                  name="nombres"
                   onChange={handleInputChange}
                   placeholder="Juan Pérez"
+                  required
                 />
               </div>
               <div>
@@ -62,27 +78,32 @@ export default function ContactForm() {
                   id="email"
                   name="email"
                   type="email"
-                  value={formData.email}
                   onChange={handleInputChange}
                   placeholder="juan@ejemplo.com"
+                  required
                 />
               </div>
               <div>
-                <Label htmlFor="phone">Celular</Label>
+                <Label htmlFor="contacto">Celular</Label>
                 <Input
-                  id="phone"
-                  name="phone"
+                  id="contacto"
+                  name="contacto"
                   type="tel"
-                  value={formData.phone}
                   onChange={handleInputChange}
                   placeholder="912345678"
+                  required
                 />
               </div>
               <div>
                 <Label htmlFor="type">¿Quieres Vender o Alquilar?</Label>
                 <Select
-                  onValueChange={handleSelectChange}
-                  value={formData.type}
+                  onValueChange={(e) => {
+                    setFormData({
+                      ...formData,
+                      Accion: e,
+                    });
+                  }}
+                  required
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Selecciona una opción" />
@@ -90,23 +111,25 @@ export default function ContactForm() {
                   <SelectContent>
                     <SelectItem value="vender">Vender</SelectItem>
                     <SelectItem value="alquilar">Alquilar</SelectItem>
+                    {/*  Asesoria inmobiliaria */}
+                    <SelectItem value="Asesoria">Asesoria</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div>
-                <Label htmlFor="details">Detalle</Label>
+                <Label htmlFor="Comentario">Detalle</Label>
                 <Textarea
-                  id="details"
-                  name="details"
-                  value={formData.details}
+                  id="Comentario"
+                  name="Comentario"
                   onChange={handleInputChange}
                   placeholder="Proporciona más detalles sobre tu propiedad..."
                   className="min-h-[100px]"
+                  required
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold  text-xl uppercase"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Enviando..." : "Enviar"}

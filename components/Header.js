@@ -48,7 +48,7 @@ export default function Header() {
             {" "}
             <a href="tel:+51998454761" className="hidden md:flex items-center">
               {" "}
-              <Phone className="w-4 h-4 mr-2" />{" "}
+              <Phone className="w-6 h-6 text-[#eab308] mr-2" />{" "}
               <span className="text-sm">+51-998-454-761</span>{" "}
             </a>{" "}
             <a
@@ -56,24 +56,33 @@ export default function Header() {
               className="flex items-center"
             >
               {" "}
-              <Mail className="w-4 h-4 mr-2" />{" "}
+              <Mail className="w-6 h-6 mr-2 text-[#eab308]" />{" "}
               <span className="text-sm">katya@alvainmobiliarios.com</span>{" "}
             </a>{" "}
           </div>{" "}
           <div className="hidden md:flex items-center space-x-4">
-            {" "}
-            <a href="#" aria-label="Facebook">
-              {" "}
-              <Facebook className="w-4 h-4" />{" "}
-            </a>{" "}
-            <a href="#" aria-label="YouTube">
-              {" "}
-              <Youtube className="w-4 h-4" />{" "}
-            </a>{" "}
-            <a href="#" aria-label="LinkedIn">
-              {" "}
-              <Linkedin className="w-4 h-4" />{" "}
-            </a>{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.facebook.com/share/qeH6v5wCVgTwLiFi/"
+            >
+              <Facebook className="w-6 h-6 text-[#eab308]" />{" "}
+            </a>
+
+            <a
+              href="https://youtube.com/@inmobiliarialva"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Youtube className="w-6 h-6 text-[#eab308]" />{" "}
+            </a>
+            <a
+              href="https://www.linkedin.com/in/katya-alva-correa-50674355"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Linkedin className="w-6 h-6 text-[#eab308]" />{" "}
+            </a>
           </div>{" "}
         </div>{" "}
       </div>{" "}

@@ -95,7 +95,7 @@ export default function ComprarSection() {
                     }}
                   />
                   <p className="text-gray-600 mb-4">{property.description}</p>
-                  <Button className="w-full bg-[#f7b500]">
+                  <Button className="w-full bg-[#f7b500] text-xl uppercase font-bold">
                     Más información
                   </Button>
                 </div>

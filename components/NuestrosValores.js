@@ -29,7 +29,7 @@ const valores = [
   },
   {
     icon: <Leaf className="h-8 w-8" />,
-    title: "Sostenibilidad",
+    title: "Responsabilidad social",
     description:
       "El 3% de los ingresos de Alva Negocios Inmobiliarios se destinan para proyectos y obras sociales en el Alto Trujillo.",
   },
