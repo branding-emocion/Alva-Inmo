@@ -11,8 +11,6 @@ export default function BlogSection() {
 
   const [Blog, setBlog] = useState([]);
 
-  console.log("Blog", Blog);
-
   useEffect(() => {
     const fetchPropiedades = async () => {
       const q = query(collection(db, "Blog"), orderBy("CreatAt", "desc"));
@@ -59,12 +57,12 @@ export default function BlogSection() {
                     <ArrowRight className="text-white w-10 h-10" />
                   </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-lg mb-2">
+                <div className="p-2 py-3">
+                  <h3 className="font-semibold text-base mb-2">
                     {post.TituloBlog}
                   </h3>
                   <div
-                    className="quill-content line-clamp-4 text-justify"
+                    className="quill-content line-clamp-3 text-justify text-gray-600"
                     dangerouslySetInnerHTML={{
                       __html: post?.ContenidoBLog,
                     }}

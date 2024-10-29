@@ -14,6 +14,8 @@ export default function ComprarSection() {
     Propiedad: {},
   });
 
+  console.log("propiedades", propiedades);
+
   useEffect(() => {
     const fetchPropiedades = async () => {
       const q = query(
@@ -70,12 +72,10 @@ export default function ComprarSection() {
                 }}
               >
                 <div className="relative">
-                  <Image
+                  <img
                     src={property.Imagenes[0] || ""}
                     alt={property.TituloPropiedad}
-                    width={400}
-                    height={300}
-                    className="w-full h-48 object-cover"
+                    className="w-full max-h-52 object-fill"
                   />
                   <div className="absolute -bottom-6 left-4">
                     <div className="bg-yellow-400 rounded-full p-3">
@@ -89,7 +89,7 @@ export default function ComprarSection() {
                   </h3>
 
                   <div
-                    className="  line-clamp-4 text-gray-600  text-justify"
+                    className="  line-clamp-3    text-justify"
                     dangerouslySetInnerHTML={{
                       __html: property?.ContenidoPropiedad,
                     }}
