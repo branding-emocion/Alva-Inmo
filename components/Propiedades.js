@@ -75,7 +75,7 @@ export default function ComprarSection() {
                   <img
                     src={property.Imagenes[0] || ""}
                     alt={property.TituloPropiedad}
-                    className="w-full max-h-52 object-fill"
+                    className="w-full max-h-52 object-contain"
                   />
                   <div className="absolute -bottom-6 left-4">
                     <div className="bg-yellow-400 rounded-full p-3">
