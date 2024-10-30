@@ -17,7 +17,7 @@ import { Button } from "./ui/button";
 const ShowPropidad = ({ OpenModal, setOpenModal }) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [InputValues, setInputValues] = useState({
-    NombrePropiedad: OpenModal?.Propiedad?.TituloPropiedad,
+    Interesado_En: OpenModal?.Propiedad?.TituloPropiedad,
   });
   const [IsSubmitting, setIsSubmitting] = useState(false);
 
