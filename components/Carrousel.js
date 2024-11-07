@@ -6,7 +6,7 @@ const slides = [
   {
     id: 1,
     image: "/banner/banner-1.jpeg",
-    title: "Haz realidad tus sueños inmobiliarios",
+    title: "Tu Felicidad es el éxito de nuestro trabajo",
     subtitle: "Compra, vende o alquila",
     buttonText: "Contáctanos",
   },
@@ -17,13 +17,13 @@ const slides = [
     subtitle: "Compra, vende o alquila",
     buttonText: "Contáctanos",
   },
-  {
-    id: 3,
-    image: "/banner/banner-3.jpeg",
-    title: "Haz realidad tus sueños inmobiliarios",
-    subtitle: "Compra, vende o alquila",
-    buttonText: "Contáctanos",
-  },
+  // {
+  //   id: 3,
+  //   image: "/banner/banner-3.jpeg",
+  //   title: "Haz realidad tus sueños inmobiliarios",
+  //   subtitle: "Compra, vende o alquila",
+  //   buttonText: "Contáctanos",
+  // },
 ];
 
 export default function RealEstateCarousel() {
